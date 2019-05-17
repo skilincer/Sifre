@@ -1,43 +1,46 @@
-/* Kullanýcý tarafýndan girilen metinin þifrelenip,
- çözülmesini saðlayan C programý. */
- 
-#include <stdio.h> 
-#include <string.h> 
-
-
-void sifrele(/*parametreler*/char sifre[], int anahtar)
-{
-  /* Ýþaretsiz (unsigned) ön eki kullanýldýðý taktirde,
-	 veri tipi ile saklanacak deðerin sýfýr ve sýfýrdan büyük olmasý saðlanýr.*/
-  unsigned int i;
-  for (i = 0; i < strlen(sifre); ++i)
-  // strlen : karakter dizisini verir. 
-  // ++i : deðiþkenin deðerini bir arttýr. sonra döngüyü iþlet. 
-  {
-  	
-    sifre[i] = sifre[i] - anahtar;
-  }
-}
-
-void sifrecoz(char sifre[], int anahtar)
-{
-  unsigned int i;
-  for (i = 0; i < strlen(sifre); ++i)
-  {
-    sifre[i] = sifre[i] + anahtar;
-  }
-}
+#include <stdio.h>
+// Tüm basamaklarýndaki rakamlarýn sayý deðerlerinin küpleri toplamý, kendisine eþit olan sayýlara "Armstrong sayý" denir. 
+//Diðer bir deyiþle her bir basamaðýn o sayýnýn basamak sayýsý kadar üssü alýnarak toplanmasýdýr.
+// Eðer toplam bu sayýyý veriyorsa o sayý Armstrong Sayýdýr.
+//Bazý Armstrong sayýlarý: 0, 1, 2, 3, 153, 370, 407, 1634, 8208
+int pw(int, int);
 
 int main()
 {
-	// 0xFACA unicode karakter 
-  char sifre[20];
-  printf("Sifrelenecek Metni Giriniz: \n ");
-  scanf("%s", sifre);
-  printf("Girdiginiz deger	: %s\n", sifre);
-  sifrele(sifre, 0xFACA);
-  printf("Sifrelenmis bicimi	: %s\n", sifre);
-  sifrecoz(sifre, 0xFACA);
-  printf("Sifresi cozulmus bicimi	: %s\n", sifre);
-  return 0;
+   int s, sonuc = 0, gecici, bdeger, basamak = 0;
+
+   printf("LUTFEN BIR SAYI GIRINIZn");
+   scanf("%d", &s);
+
+   gecici = s;
+   while (gecici != 0) {
+      basamak++;
+      gecici = gecici/10;
+   }
+
+   gecici = s;
+
+   while (gecici != 0) {
+      bdeger = gecici%10;
+      sonuc = sonuc + pw(bdeger, basamak);
+      gecici = gecici/10;
+   }
+
+   if (s == sonuc)
+      printf("%d ARMSTRONG SAYIDIR.n", s);
+   else
+      printf("%d ARMSTRONG SAYI DEGILDIR.n", s);
+
+   return 0;
 }
+
+int pw(int s, int r) {
+   int c, p = 1;
+
+   for (c = 1; c <= r; c++)
+      p = p*s;
+
+   return p;
+   
+   
+   }
